@@ -1,0 +1,196 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<!--
+/**
+ * Copyright 2010 The Apache Software Foundation
+ *
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+-->
+<configuration>
+	
+	
+		<property>
+			<name>hbase.rootdir</name>
+			<value>hdfs://nncluster/hbase945</value>
+			<description>The directory shared by region servers.</description>
+		</property>
+
+		<property>
+			<name>hbase.cluster.distributed</name>
+			<value>true</value>
+		</property>
+		
+
+		<property>
+			<name>hbase.zookeeper.quorum</name>
+			<value>namenode1.police.com,namenode2.police.com,datanode1.police.com</value>
+		</property>
+		
+	 <property>
+	    <name>hbase.hregion.memstore.flush.size</name>
+	    <value>134217728</value>
+	    <description>
+	    Memstore will be flushed to disk if size of the memstore
+	    exceeds this number of bytes.  Value is checked by a thread that runs
+	    every hbase.server.thread.wakefrequency.
+	    </description>
+	  </property>		
+	  <property>
+	    <name>hbase.hregion.max.filesize</name>
+	    <value>10737418240</value>
+	    <description>
+	    Maximum HStoreFile size. If any one of a column families' HStoreFiles has
+	    grown to exceed this value, the hosting HRegion is split in two.
+	    Default: 10G.
+	    </description>
+	  </property>	  
+	  <property>
+		  <name>dfs.block.size</name>
+		  <value>268435456</value>
+		  <description>The default block size   67108864 for new files.</description>
+	  </property>
+    <property>   
+      <name>dfs.replication</name>   
+      <value>3</value>   
+    </property>  
+
+
+    <property>
+      <name>zookeeper.znode.parent</name>
+      <value>/hbase945</value>
+    </property>
+	
+		<property>
+			<name>hbase.master.port</name>	
+			<value>60001</value>
+		</property>
+		
+	  <property>
+      <name>hbase.master.info.port</name>
+      <value>60011</value>
+    </property>
+  
+    <property>
+      <name>hbase.regionserver.port</name>
+      <value>60021</value>
+    </property>
+    
+    <property>
+      <name>hbase.regionserver.info.port</name>
+      <value>60031</value>
+    </property>
+  
+    <property>
+      <name>hbase.rest.port</name>
+      <value>8081</value>
+    </property>
+   
+   
+  <property>
+    <name>hbase.regionserver.lease.period</name>
+    <value>600000</value>
+    <description>HRegion server lease period in milliseconds. Default is
+    60 seconds. Clients must report in within this period else they are
+    considered dead.
+    </description>
+  </property>
+    
+  <property>
+    <name>zookeeper.session.timeout</name>
+    <value>600000</value>
+    <description>ZooKeeper session timeout.
+      HBase passes this to the zk quorum as suggested maximum time for a
+      session (This setting becomes zookeeper's 'maxSessionTimeout').  See
+      http://hadoop.apache.org/zookeeper/docs/current/zookeeperProgrammers.html#ch_zkSessions
+      "The client sends a requested timeout, the server responds with the
+      timeout that it can give the client. " In milliseconds.
+    </description>
+  </property>
+  
+  <property>
+    <name>hbase.regionserver.msginterval</name>
+    <value>1000</value>
+    <description>Interval between messages from the RegionServer to Master
+    in milliseconds.
+    </description>
+  </property>  
+
+
+<property>
+<name>hbase.coprocessor.region.classes</name>
+<!-- <value>org.apache.hadoop.hbase.security.token.TokenProvider,org.apache.hadoop.hbase.security.access.AccessController</value> -->
+
+<value>org.apache.hadoop.hbase.regionserver.ViewEndpoint,org.apache.hadoop.hbase.regionserver.ViewCorprocessorObserver,org.apache.hadoop.hbase.security.token.TokenProvider,org.apache.hadoop.hbase.security.access.AccessController,org.apache.hadoop.hbase.rowcode.RowCodeRegionObserver,org.apache.hadoop.hbase.rowcode.RowCodeQueryEndpoint,org.apache.hadoop.test.SqoopImportCorprocessorObserver,org.log.AuditCorprocessorObserver</value>
+
+<description></description>
+</property>
+
+<property>
+<name>hbase.rpc.engine</name>
+<value>org.apache.hadoop.hbase.ipc.SecureRpcEngine</value>
+</property>
+<property>
+<name>hbase.security.authorization</name>
+<value>true</value>
+</property>
+<property>
+<name>hbase.superuser</name>
+<value>admin</value>
+</property>
+<property>
+<name>hbase.coprocessor.master.classes</name>
+<value>org.apache.hadoop.hbase.security.access.AccessController</value>
+</property>
+
+<property>
+	<name>hbase.rpc.timeout</name>
+	<value>600000</value>
+</property>
+<property>
+	<name>hbase.regionserver.optionalcacheflushinterval</name>
+	<value>72000000</value>
+</property>
+<property>
+	<name>hbase.regionserver.handler.count</name>
+	<value>30</value>
+</property>
+
+<!-- kerberos conf -->
+
+        <property>
+                <name>hbase.security.authentication</name>
+                <value>kerberos</value>
+        </property>
+
+        <property>
+                <name>hbase.regionserver.kerberos.principal</name>
+                <value>hbase/_HOST@POLICE.COM</value>
+        </property>
+        <property>
+                <name>hbase.regionserver.keytab.file</name>
+                <value>/home/zhouzhd/hbase.keytab</value>
+        </property>
+        <property>
+                <name>hbase.master.kerberos.principal</name>
+                <value>hbase/_HOST@POLICE.COM</value>
+        </property>
+        <property>
+                <name>hbase.master.keytab.file</name>
+                <value>/home/zhouzhd/hbase.keytab</value>
+        </property>    
+</configuration>

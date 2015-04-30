@@ -1,0 +1,20 @@
+[libdefaults]
+ default_realm = POLICE.COM
+ dns_lookup_realm = false
+ dns_lookup_kdc = false
+ forwardable = true
+ renew_lifetime = 3000d
+ ticket_lifetime = 3000d
+ #allow_weak_crypto=true
+
+[realms]
+ POLICE.COM = {
+  kdc = 10.48.146.51
+  kdc = 10.48.146.52
+ }
+
+[domain_realm]
+ .police.com = POLICE.COM
+ police.com = POLICE.COM
+
+
